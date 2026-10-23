@@ -1,0 +1,334 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d18">
+
+    <title>MedGuide AI — Your Medical Knowledge Companion</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="app-shell">
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+
+            <a class="brand" href="/">
+                <span class="brand-icon">✚</span>
+                <span class="brand-name">
+                    MedGuide<span class="brand-highlight"> AI</span>
+                    <small>MEDICAL INTELLIGENCE</small>
+                </span>
+            </a>
+
+            <button class="new-chat-button" id="newChat">
+                <span>＋</span> New conversation
+            </button>
+
+            <div class="sidebar-label">QUICK ACCESS</div>
+
+            <button class="sidebar-item" data-prompt="Explain my symptoms and what information would help understand them.">
+                <span>◈</span> Symptom guide
+            </button>
+
+            <button class="sidebar-item" data-prompt="Explain how medications work, their common risks, and what I should ask a pharmacist.">
+                <span>✳</span> Medication education
+            </button>
+
+            <button class="sidebar-item" data-prompt="Explain a medical condition, including its common symptoms, causes, and usual evaluation.">
+                <span>♡</span> Medical conditions
+            </button>
+
+            <button class="sidebar-item" data-prompt="Explain the medical evidence and reputable clinical guidance relevant to my question.">
+                <span>⌕</span> Research assistant
+            </button>
+
+            <div class="sidebar-spacer"></div>
+
+            <div class="sidebar-card">
+                <div class="sidebar-card-icon">✦</div>
+                <strong>Knowledge-powered AI</strong>
+                <p>Answers informed by your medical knowledge base and available web research.</p>
+                <div class="mini-badge">
+                    <span class="status-dot"></span>
+                    <span id="sidebarStatus">Checking connection</span>
+                </div>
+            </div>
+
+            <button class="sidebar-item settings-button" id="settingsToggle">
+                <span>⚙</span> API settings
+            </button>
+
+            <div class="sidebar-footer">
+                <span class="footer-mark">✚</span>
+                <span>Built for medical education</span>
+            </div>
+        </aside>
+
+        <!-- Main application -->
+        <main class="main-panel">
+
+            <header class="topbar">
+                <button class="icon-button mobile-menu" id="mobileMenu"
+                        aria-label="Toggle navigation">
+                    ☰
+                </button>
+
+                <div class="topbar-title">
+                    <span class="breadcrumb-muted">Workspace</span>
+                    <span class="breadcrumb-separator">/</span>
+                    <span>Medical Assistant</span>
+                </div>
+
+                <div class="topbar-right">
+                    <span class="connection-pill" id="status">
+                        <span class="status-dot"></span>
+                        Connecting...
+                    </span>
+
+                    <button class="icon-button" id="clearChat"
+                            title="Start a new conversation"
+                            aria-label="Clear conversation">
+                        ↻
+                    </button>
+                </div>
+            </header>
+
+            <!-- Medical safety notice -->
+            <div class="safety-banner">
+                <span class="safety-icon">ⓘ</span>
+                <p>
+                    <strong>Educational use only.</strong>
+                    AI can make mistakes. This is not a diagnosis or a substitute
+                    for professional medical care.
+                </p>
+            </div>
+
+            <!-- Chat region -->
+            <section class="chat-scroll" id="messages"
+                     aria-live="polite" aria-label="Conversation">
+
+                <div class="welcome-screen" id="welcome">
+
+                    <div class="welcome-orb">
+                        <div class="orb-ring ring-one"></div>
+                        <div class="orb-ring ring-two"></div>
+                        <div class="orb-core">✚</div>
+                        <span class="orb-spark spark-one">✦</span>
+                        <span class="orb-spark spark-two">✧</span>
+                    </div>
+
+                    <div class="eyebrow">
+                        <span class="eyebrow-dot"></span>
+                        YOUR MEDICAL KNOWLEDGE COMPANION
+                    </div>
+
+                    <h1>
+                        Better questions.<br>
+                        <span class="gradient-text">Clearer understanding.</span>
+                    </h1>
+
+                    <p class="welcome-description">
+                        Explore medical science, understand health information,
+                        and discover evidence-based resources with your AI assistant.
+                    </p>
+
+                    <div class="suggestion-grid">
+
+                        <button class="suggestion-card"
+                                data-prompt="Explain asthma in simple language, including common symptoms, triggers, and how clinicians evaluate it.">
+                            <span class="suggestion-icon cyan">◈</span>
+                            <span class="suggestion-copy">
+                                <strong>Understand symptoms</strong>
+                                <small>Explore possible explanations</small>
+                            </span>
+                            <span class="suggestion-arrow">↗</span>
+                        </button>
+
+                        <button class="suggestion-card"
+                                data-prompt="Explain how a common medication works, its typical side effects, and important safety questions to discuss with a pharmacist.">
+                            <span class="suggestion-icon purple">✳</span>
+                            <span class="suggestion-copy">
+                                <strong>Learn about medicines</strong>
+                                <small>Benefits, risks and precautions</small>
+                            </span>
+                            <span class="suggestion-arrow">↗</span>
+                        </button>
+
+                        <button class="suggestion-card"
+                                data-prompt="Explain how to evaluate the reliability of medical research and clinical guidelines.">
+                            <span class="suggestion-icon blue">⌕</span>
+                            <span class="suggestion-copy">
+                                <strong>Explore medical research</strong>
+                                <small>Understand the evidence</small>
+                            </span>
+                            <span class="suggestion-arrow">↗</span>
+                        </button>
+
+                        <button class="suggestion-card"
+                                data-prompt="Explain what information a clinician typically considers when evaluating a new health concern.">
+                            <span class="suggestion-icon green">♡</span>
+                            <span class="suggestion-copy">
+                                <strong>Prepare for a visit</strong>
+                                <small>Know what to discuss</small>
+                            </span>
+                            <span class="suggestion-arrow">↗</span>
+                        </button>
+
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Image preview -->
+            <div class="attachment-preview" id="preview" hidden>
+                <div class="attachment-thumbnail">
+                    <img id="thumbnail" alt="Selected medical image">
+                </div>
+
+                <div class="attachment-details">
+                    <strong>Image attached</strong>
+                    <small>Ready to send with your question</small>
+                </div>
+
+                <button class="icon-button remove-image" id="remove"
+                        type="button" aria-label="Remove image">
+                    ×
+                </button>
+            </div>
+
+            <!-- Camera -->
+            <div class="camera-panel" id="cameraPanel" hidden>
+                <video id="video" autoplay playsinline></video>
+
+                <div class="camera-actions">
+                    <button class="secondary-button" id="snap" type="button">
+                        Capture image
+                    </button>
+
+                    <button class="secondary-button" id="closeCamera" type="button">
+                        Close camera
+                    </button>
+                </div>
+            </div>
+
+            <canvas id="canvas" hidden></canvas>
+
+            <!-- Composer -->
+            <footer class="composer-area">
+
+                <form id="chatForm" class="composer">
+
+                    <textarea
+                        id="message"
+                        placeholder="Ask a medical question..."
+                        rows="1"
+                        maxlength="4000"
+                        required
+                        aria-label="Your medical question"
+                    ></textarea>
+
+                    <div class="composer-toolbar">
+
+                        <div class="composer-tools">
+
+                            <label class="tool-button"
+                                   for="image"
+                                   title="Attach an image">
+                                <span>＋</span>
+                                <span class="tool-label">Attach</span>
+                            </label>
+
+                            <input id="image" type="file"
+                                   accept="image/png,image/jpeg,image/webp"
+                                   hidden>
+
+                            <button class="tool-button" id="camera"
+                                    type="button" title="Open camera">
+                                ◉ <span class="tool-label">Camera</span>
+                            </button>
+
+                            <button class="tool-button" id="mic"
+                                    type="button" title="Voice input">
+                                ♩ <span class="tool-label">Voice</span>
+                            </button>
+
+                            <span class="toolbar-divider"></span>
+
+                            <span class="privacy-label">
+                                <span class="privacy-dot"></span>
+                                Private session
+                            </span>
+                        </div>
+
+                        <button class="send-button" id="send" type="submit">
+                            <span id="sendLabel">Send</span>
+                            <span class="send-arrow">↑</span>
+                        </button>
+
+                    </div>
+                </form>
+
+                <div class="composer-bottom">
+                    <span>Powered by Gemini</span>
+                    <span class="bottom-separator">·</span>
+                    <span>Your medical knowledge base</span>
+
+                    <button id="listen" class="read-answer-button"
+                            type="button" title="Read the last answer aloud">
+                        ♫ Read answer
+                    </button>
+                </div>
+
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- API settings modal -->
+    <div class="modal-backdrop" id="settingsModal" hidden>
+        <section class="settings-modal" role="dialog"
+                 aria-modal="true" aria-labelledby="settingsTitle">
+
+            <div class="modal-heading">
+                <div>
+                    <span class="modal-eyebrow">CONFIGURATION</span>
+                    <h2 id="settingsTitle">Session settings</h2>
+                </div>
+
+                <button class="icon-button" id="closeSettings"
+                        type="button" aria-label="Close settings">
+                    ×
+                </button>
+            </div>
+
+            <p class="modal-description">
+                Enter your API token only if you configured API_TOKEN in your
+                server's .env file. Your Gemini key belongs on the server,
+                not in this browser.
+            </p>
+
+            <label class="input-label" for="token">API access token</label>
+
+            <input id="token" class="settings-input" type="password"
+                   placeholder="Optional server API token"
+                   autocomplete="off">
+
+            <div class="modal-note">
+                <span>🔒</span>
+                <span>Never enter your Gemini or Pinecone secret keys here.</span>
+            </div>
+
+            <button class="primary-button" id="saveSettings" type="button">
+                Save session settings
+            </button>
+        </section>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
